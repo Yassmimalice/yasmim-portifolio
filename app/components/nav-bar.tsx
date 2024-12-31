@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Globe, Menu, X } from 'lucide-react'
 import { useLanguage } from '@/contexts/language-context'
-import { useTranslation } from '@/utils/translations'
+import { useTranslation, NAV_ITEMS } from '@/utils/translations'
 
 export function NavBar() {
   const { language, setLanguage } = useLanguage()
-  const { t } = useTranslation()
+  const { getNavText } = useTranslation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -19,8 +19,6 @@ export function NavBar() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  const navItems = ['home', 'about', 'projects', 'contact']
 
   return (
     <motion.nav
@@ -41,14 +39,14 @@ export function NavBar() {
         </motion.a>
 
         <div className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <motion.a
               key={item}
               href={`#${item}`}
               className="text-gray-100 hover:text-pink-600 transition-colors"
               whileHover={{ y: -2 }}
             >
-              {t(`nav.${item}` as const)}
+              {getNavText(item)}
             </motion.a>
           ))}
         </div>
@@ -87,7 +85,7 @@ export function NavBar() {
             transition={{ duration: 0.3 }}
             className="md:hidden mt-4 bg-gray-800 rounded-lg overflow-hidden"
           >
-            {navItems.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <motion.a
                 key={item}
                 href={`#${item}`}
@@ -95,7 +93,7 @@ export function NavBar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 whileHover={{ x: 5 }}
               >
-                {t(`nav.${item}` as const)}
+                {getNavText(item)}
               </motion.a>
             ))}
           </motion.div>

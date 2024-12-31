@@ -1,5 +1,21 @@
 import { useLanguage } from '@/contexts/language-context'
 
+// Define the navigation items and their translations explicitly
+const navTranslations = {
+  en: {
+    home: 'Home',
+    about: 'About',
+    projects: 'Projects',
+    contact: 'Contact'
+  },
+  pt: {
+    home: 'Início',
+    about: 'Sobre',
+    projects: 'Projetos',
+    contact: 'Contato'
+  }
+} as const
+
 const translations = {
   en: {
     'nav.home': 'Home',
@@ -65,6 +81,7 @@ const translations = {
     'contact.linkedin': 'LinkedIn',
     'contact.instagram': 'Instagram',
     'contact.github': 'GitHub',
+    'techStack': 'Tech Stack',
   },
   pt: {
     'nav.home': 'Início',
@@ -130,18 +147,26 @@ const translations = {
     'contact.linkedin': 'LinkedIn',
     'contact.instagram': 'Instagram',
     'contact.github': 'GitHub',
+    'techStack': 'Stack Tecnológica',
   }
 } as const
+
+export type NavItem = keyof typeof navTranslations.en
+export const NAV_ITEMS: NavItem[] = ['home', 'about', 'projects', 'contact']
 
 type TranslationKey = keyof typeof translations.en
 
 export function useTranslation() {
   const { language } = useLanguage()
 
-  const t = (key: TranslationKey): string => {
-    return translations[language][key] || key
+  function t(key: TranslationKey): string {
+    return translations[language][key]
   }
 
-  return { t }
+  function getNavText(item: NavItem): string {
+    return navTranslations[language][item]
+  }
+
+  return { t, getNavText }
 }
 
