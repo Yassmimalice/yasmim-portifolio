@@ -11,29 +11,29 @@ export function ContactSection() {
     { 
       icon: Mail, 
       title: 'contact.email', 
-      value: 'yasmim@example.com', 
-      href: 'mailto:yasmim@example.com',
+      value: 'yassmimalicee@gmail.com', 
+      href: 'mailto:yassmimalicee@gmail.com',
       color: 'from-indigo-500 to-purple-500'
     },
     { 
       icon: Linkedin, 
       title: 'contact.linkedin', 
-      value: 'linkedin.com/in/yasmimalice', 
-      href: 'https://linkedin.com/in/yasmimalice',
+      value: 'linkedin.com/in/yasmimaliceteixeira', 
+      href: 'www.linkedin.com/in/yasmimaliceteixeira',
       color: 'from-blue-500 to-indigo-500'
     },
     { 
       icon: Instagram, 
       title: 'contact.instagram', 
-      value: '@yasmimalice', 
-      href: 'https://instagram.com/yasmimalice',
+      value: '@yazzmimalice', 
+      href: 'https://www.instagram.com/yazzmimalice/profilecard/?igsh=cWZ4aGp1dnN6eDh4',
       color: 'from-pink-500 to-rose-500'
     },
     { 
       icon: Github, 
       title: 'contact.github', 
       value: 'github.com/yasmimalice', 
-      href: 'https://github.com/yasmimalice',
+      href: 'https://github.com/Yassmimalice',
       color: 'from-gray-700 to-gray-900'
     }
   ] as const
