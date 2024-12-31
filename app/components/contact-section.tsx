@@ -11,15 +11,15 @@ export function ContactSection() {
     { 
       icon: Mail, 
       title: 'contact.email', 
-      value: 'yassmimalicee@gmail.com', 
-      href: 'mailto:yassmimalicee@gmail.com',
+      value: 'yassmimalice@gmail.com', 
+      href: 'mailto:yassmimalice@gmail.com',
       color: 'from-indigo-500 to-purple-500'
     },
     { 
       icon: Linkedin, 
       title: 'contact.linkedin', 
       value: 'linkedin.com/in/yasmimaliceteixeira', 
-      href: 'www.linkedin.com/in/yasmimaliceteixeira',
+      href: 'https://www.linkedin.com/in/yasmimaliceteixeira',
       color: 'from-blue-500 to-indigo-500'
     },
     { 
@@ -76,45 +76,60 @@ export function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="container mx-auto">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-          >
-            {contactInfo.map((item, index) => (
-              <motion.a
-                key={index}
-                variants={itemVariants}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative p-6 bg-gray-800 rounded-2xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 overflow-hidden"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                
-                <div className="relative flex items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center mb-4">
-                      <div className={`p-3 rounded-xl bg-gradient-to-br ${item.color}`}>
-                        <item.icon className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    <h3 className="text-gray-100 font-semibold text-lg mb-2">
-                      {t(item.title)}
-                    </h3>
-                    <p className="text-purple-300 text-sm font-medium">
-                      {item.value}
-                    </p>
-                  </div>
-                  <ArrowUpRight className="w-5 h-5 text-purple-400 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {contactInfo.map((item, index) => (
+            <motion.a
+              key={index}
+              variants={itemVariants}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-6 bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 overflow-hidden"
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+              
+              <div className="relative flex flex-col items-start h-full">
+                <div className={`p-3 rounded-xl bg-gradient-to-br ${item.color} mb-4`}>
+                  <item.icon className="w-6 h-6 text-white" />
                 </div>
-              </motion.a>
-            ))}
-          </motion.div>
-        </div>
+                <h3 className="text-gray-100 font-semibold text-lg mb-2">
+                  {t(item.title)}
+                </h3>
+                <p className="text-purple-300 text-sm font-medium mb-4">
+                  {item.value}
+                </p>
+                <div className="mt-auto flex items-center text-purple-400 text-sm font-semibold">
+                  <span className="mr-2">{t('contact.connect')}</span>
+                  <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-gray-400 text-lg">
+            {t('contact.availability')}
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-6 px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-300"
+          >
+            {t('contact.schedule')}
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   )
