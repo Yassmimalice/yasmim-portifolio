@@ -1,11 +1,39 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Mail, Linkedin, Instagram, Github, Send } from "lucide-react"
 import { useTranslation } from "@/utils/translations"
 
 export function ContactSection() {
   const { t } = useTranslation()
+  const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setFormStatus("loading")
+
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries())
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (response.ok) {
+        setFormStatus("success")
+      } else {
+        setFormStatus("error")
+      }
+    } catch (error) {
+      setFormStatus("error")
+    }
+  }
 
   return (
     <section className="py-24 px-4 relative bg-gradient-to-br from-gray-900 to-black overflow-hidden">
@@ -28,7 +56,7 @@ export function ContactSection() {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-8">
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-gray-300 mb-2">
@@ -37,6 +65,8 @@ export function ContactSection() {
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    required
                     className="w-full bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 text-gray-100 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all"
                     placeholder={t("contact.form.namePlaceholder")}
                   />
@@ -48,6 +78,8 @@ export function ContactSection() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    required
                     className="w-full bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 text-gray-100 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all"
                     placeholder={t("contact.form.emailPlaceholder")}
                   />
@@ -60,6 +92,8 @@ export function ContactSection() {
                 <input
                   type="text"
                   id="subject"
+                  name="subject"
+                  required
                   className="w-full bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 text-gray-100 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all"
                   placeholder={t("contact.form.subjectPlaceholder")}
                 />
@@ -70,6 +104,8 @@ export function ContactSection() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
+                  required
                   rows={4}
                   className="w-full bg-gray-900/50 border border-gray-700/50 rounded-lg px-4 py-2.5 text-gray-100 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                   placeholder={t("contact.form.messagePlaceholder")}
@@ -77,11 +113,16 @@ export function ContactSection() {
               </div>
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                disabled={formStatus === "loading"}
+                className="w-full px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
-                {t("contact.form.submit")}
+                {formStatus === "loading" ? t("contact.form.sending") : t("contact.form.submit")}
               </button>
+              {formStatus === "success" && (
+                <p className="text-green-400 text-center">{t("contact.form.successMessage")}</p>
+              )}
+              {formStatus === "error" && <p className="text-red-400 text-center">{t("contact.form.errorMessage")}</p>}
             </form>
           </div>
 
