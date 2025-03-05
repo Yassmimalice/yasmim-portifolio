@@ -60,8 +60,9 @@ const translations = {
     "skills.state.description": "Managing complex application state effectively",
 
     "projects.title": "Projects",
-    "projects.viewLive": "View Live",
-    "projects.viewCode": "View Code",
+    "projects.subtitle": "Portfolio",
+    "projects.viewLive": "Live",
+    "projects.viewCode": "Code",
 
     "testimonials.title": "Testimonials",
     "testimonials.description": "What people say about working with me",
@@ -158,6 +159,7 @@ const translations = {
     "skills.state.description": "Gerenciando estado de aplicações complexas de forma eficiente",
 
     "projects.title": "Projetos",
+    "projects.subtitle": "Portfólio",
     "projects.viewLive": "Ver Projeto",
     "projects.viewCode": "Ver Código",
 
